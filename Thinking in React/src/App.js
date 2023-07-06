@@ -1,24 +1,23 @@
-function Button({ onClick, children }) {
-  return <button onClick={onClick}>{children}</button>;
-}
+import { useState } from 'react';
+import Chat from './Chat.js';
+import ContactList from './ContactList.js';
 
-function PlayButton({ movieName }) {
-  function handlePlayClick() {
-    alert(`Playing ${movieName}!`);
-  }
-
-  return <Button onClick={handlePlayClick}>Play "{movieName}"</Button>;
-}
-
-function UploadButton() {
-  return <Button onClick={() => alert('Uploading!')}>Upload Image</Button>;
-}
-
-export default function Toolbar() {
+export default function Messenger() {
+  const [to, setTo] = useState(contacts[0]);
   return (
     <div>
-      <PlayButton movieName="Kiki's Delivery Service" />
-      <UploadButton />
+      <ContactList
+        contacts={contacts}
+        selectedContact={to}
+        onSelect={(contact) => setTo(contact)}
+      />
+      <Chat contact={to} key={to.email} />
     </div>
   );
 }
+
+const contacts = [
+  { name: 'Taylor', email: 'taylor@mail.com' },
+  { name: 'Alice', email: 'alice@mail.com' },
+  { name: 'Bob', email: 'bob@mail.com' },
+];
